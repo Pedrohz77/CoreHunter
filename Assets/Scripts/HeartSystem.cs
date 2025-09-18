@@ -15,7 +15,6 @@ public class HeartSystem : MonoBehaviour
 
     public Animator animator;
 
-
     void Start()
     {
         vida = vidaMaxima;
@@ -24,6 +23,12 @@ public class HeartSystem : MonoBehaviour
     void Update()
     {
         HealthLogic();
+
+        // Exemplo: apertar F para usar item de cura
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            Curar(1);
+        }
     }
 
     void HealthLogic()
@@ -50,27 +55,28 @@ public class HeartSystem : MonoBehaviour
         {
             vida = 0;
 
-
             if (animator != null)
             {
-                // para todas as animações
                 animator.Rebind();
                 animator.Update(0f);
-
-                // toca apenas a animação de morte
                 animator.SetTrigger("DeadPlayer");
             }
 
-            // trava movimento
             PlayerController pc = GetComponent<PlayerController>();
             if (pc != null) pc.enabled = false;
 
             Rigidbody2D rb = GetComponent<Rigidbody2D>();
             if (rb != null) rb.linearVelocity = Vector2.zero;
 
-            // vai para GameOver após 3s
             Invoke("LoadGameOverScene", 3f);
         }
+    }
+
+    public void Curar(int quantidade)
+    {
+        vida += quantidade;
+        if (vida > vidaMaxima)
+            vida = vidaMaxima;
     }
 
     void LoadGameOverScene()
