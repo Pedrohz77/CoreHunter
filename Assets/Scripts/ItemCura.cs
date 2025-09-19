@@ -1,38 +1,29 @@
 using UnityEngine;
 
-public class CollectItem : MonoBehaviour
+public class ItemCura : MonoBehaviour
 {
+    public int quantidadeCura = 1; // cura apenas 1 coração
     private bool playerNaArea = false;
-    private EnergyCoreUI EnergyCoreManager;
-
-    void Start()
-    {
-        EnergyCoreManager = Object.FindAnyObjectByType<EnergyCoreUI>();
-    }
+    private HeartSystem heartSystem;
 
     void Update()
     {
         if (playerNaArea && Input.GetKeyDown(KeyCode.F))
         {
-            Coletar();
-        }
-    }
+            if (heartSystem != null)
+            {
+                heartSystem.Curar(quantidadeCura);
+            }
 
-    void Coletar()
-    {
-        //Debug.Log("Núcleo coletado!");
-        if (EnergyCoreManager != null)
-        {
-            EnergyCoreManager.ColetarNucleo();
+            Destroy(gameObject);
         }
-
-        Destroy(gameObject);
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Player"))
         {
+            heartSystem = other.GetComponent<HeartSystem>();
             playerNaArea = true;
         }
     }
@@ -42,6 +33,7 @@ public class CollectItem : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             playerNaArea = false;
+            heartSystem = null;
         }
     }
 }

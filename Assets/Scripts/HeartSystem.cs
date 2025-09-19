@@ -23,12 +23,6 @@ public class HeartSystem : MonoBehaviour
     void Update()
     {
         HealthLogic();
-
-        // Exemplo: apertar F para usar item de cura
-        if (Input.GetKeyDown(KeyCode.F))
-        {
-            Curar(1);
-        }
     }
 
     void HealthLogic()

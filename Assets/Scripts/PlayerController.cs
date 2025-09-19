@@ -57,7 +57,7 @@ public class PlayerController : MonoBehaviour
             currentSpeed = walkspeed;
 
             // Attack
-            if (Input.GetKeyDown(KeyCode.Mouse0))
+            if (Input.GetKeyDown(KeyCode.Mouse1))
             {
                 Punch();
             }
@@ -83,7 +83,7 @@ public class PlayerController : MonoBehaviour
             }
 
             // Disparo
-            if (Input.GetKeyDown(KeyCode.Q) && Time.time >= lastShootTime + shootCooldown)
+            if (Input.GetKeyDown(KeyCode.Mouse0) && Time.time >= lastShootTime + shootCooldown)
         {
             Shoot();
             lastShootTime = Time.time; // Atualiza o tempo do último disparo
